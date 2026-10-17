@@ -1,0 +1,183 @@
+{
+  "abi": [
+    {
+      "inputs": [{ "internalType": "address", "name": "_nftContract", "type": "address" }],
+      "stateMutability": "nonpayable", "type": "constructor"
+    },
+    { "inputs": [], "name": "AlreadyRegistered", "type": "error" },
+    { "inputs": [], "name": "InvalidCommitment", "type": "error" },
+    { "inputs": [], "name": "InvalidPageParams", "type": "error" },
+    { "inputs": [], "name": "NotRegistered", "type": "error" },
+    { "inputs": [], "name": "NotVerifiedResponder", "type": "error" },
+    { "inputs": [], "name": "RecordExpired", "type": "error" },
+    { "inputs": [], "name": "RecordInactive", "type": "error" },
+    {
+      "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+      "name": "OwnableInvalidOwner", "type": "error"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+      "name": "OwnableUnauthorizedAccount", "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": true, "internalType": "address", "name": "patient", "type": "address" },
+        { "indexed": true, "internalType": "address", "name": "responder", "type": "address" },
+        { "indexed": false, "internalType": "uint64", "name": "timestamp", "type": "uint64" }
+      ],
+      "name": "AccessLogged", "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": true, "internalType": "address", "name": "patient", "type": "address" },
+        { "indexed": false, "internalType": "bytes32", "name": "commitment", "type": "bytes32" },
+        { "indexed": false, "internalType": "string", "name": "cid", "type": "string" },
+        { "indexed": false, "internalType": "uint64", "name": "expiresAt", "type": "uint64" }
+      ],
+      "name": "RecordRegistered", "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": true, "internalType": "address", "name": "patient", "type": "address" },
+        { "indexed": false, "internalType": "bytes32", "name": "commitment", "type": "bytes32" },
+        { "indexed": false, "internalType": "string", "name": "cid", "type": "string" },
+        { "indexed": false, "internalType": "uint64", "name": "expiresAt", "type": "uint64" }
+      ],
+      "name": "RecordUpdated", "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{ "indexed": true, "internalType": "address", "name": "patient", "type": "address" }],
+      "name": "RecordRevoked", "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{ "indexed": true, "internalType": "address", "name": "patient", "type": "address" }],
+      "name": "RecordReactivated", "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{ "indexed": true, "internalType": "address", "name": "responder", "type": "address" }],
+      "name": "ResponderAdded", "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{ "indexed": true, "internalType": "address", "name": "responder", "type": "address" }],
+      "name": "ResponderRemoved", "type": "event"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "responder", "type": "address" }],
+      "name": "addResponder", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "patient", "type": "address" }],
+      "name": "getAccessCount",
+      "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+      "stateMutability": "view", "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "address", "name": "patient", "type": "address" },
+        { "internalType": "uint256", "name": "offset", "type": "uint256" },
+        { "internalType": "uint256", "name": "limit", "type": "uint256" }
+      ],
+      "name": "getAccessHistory",
+      "outputs": [
+        {
+          "components": [
+            { "internalType": "address", "name": "responder", "type": "address" },
+            { "internalType": "uint64", "name": "timestamp", "type": "uint64" }
+          ],
+          "internalType": "struct MediLockRegistry.AccessEntry[]",
+          "name": "entries", "type": "tuple[]"
+        },
+        { "internalType": "uint256", "name": "total", "type": "uint256" }
+      ],
+      "stateMutability": "view", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "patient", "type": "address" }],
+      "name": "getRecord",
+      "outputs": [
+        {
+          "components": [
+            { "internalType": "bytes32", "name": "commitment", "type": "bytes32" },
+            { "internalType": "string", "name": "cid", "type": "string" },
+            { "internalType": "bool", "name": "active", "type": "bool" },
+            { "internalType": "uint64", "name": "updatedAt", "type": "uint64" },
+            { "internalType": "uint64", "name": "expiresAt", "type": "uint64" },
+            { "internalType": "uint64", "name": "accessCount", "type": "uint64" }
+          ],
+          "internalType": "struct MediLockRegistry.Record",
+          "name": "", "type": "tuple"
+        }
+      ],
+      "stateMutability": "view", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "patient", "type": "address" }],
+      "name": "isRegistered",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+      "stateMutability": "view", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "patient", "type": "address" }],
+      "name": "logAccess", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [], "name": "nftContract",
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "stateMutability": "view", "type": "function"
+    },
+    {
+      "inputs": [], "name": "owner",
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "stateMutability": "view", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "patient", "type": "address" }],
+      "name": "encryptedData",
+      "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+      "stateMutability": "view", "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "bytes32", "name": "commitment", "type": "bytes32" },
+        { "internalType": "string", "name": "cid", "type": "string" },
+        { "internalType": "uint64", "name": "expiresAt", "type": "uint64" }
+      ],
+      "name": "registerRecord", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [], "name": "reactivateRecord", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "responder", "type": "address" }],
+      "name": "removeResponder", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [], "name": "revokeRecord", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "bytes", "name": "data", "type": "bytes" }],
+      "name": "storeEncryptedDataOnChain", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "bytes32", "name": "commitment", "type": "bytes32" },
+        { "internalType": "string", "name": "cid", "type": "string" },
+        { "internalType": "uint64", "name": "expiresAt", "type": "uint64" }
+      ],
+      "name": "updateRecord", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "name": "verifiedResponders",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+      "stateMutability": "view", "type": "function"
+    }
+  ]
+}
